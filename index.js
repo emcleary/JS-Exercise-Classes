@@ -152,6 +152,11 @@ class Instructor extends Lambdasian {
     }
     demo(subject) { return `Today we are learning about ${subject}` };
     grade(student, subject) {
+	// STRETCH
+	student.grade += Math.ceil(Math.random()*20) - 10; // +/- up to 10 points
+	if (student.grade > 100) student.grade = 100;
+	if (student.grade < 0) student.grade = 0;
+	// END STRETCH
 	return `${student.name} receives a perfect score on ${subject}`;
     }
 }
@@ -187,6 +192,7 @@ class Student extends Lambdasian {
 	this.previousBackground = attributes.previousBackground;
 	this.className = attributes.className;
 	this.favSubjects = attributes.favSubjects;
+	this.grade = 100; // Stretch
     }
     listSubjects() {
 	const string = this.favSubjects.join(', ');
@@ -197,6 +203,13 @@ class Student extends Lambdasian {
     }
     sprintChallenge(subject) {
 	return `${this.name} has begun sprint challenge on ${subject}`;
+    }
+    graduate() {
+	if (this.grade >= 70) {
+	    return `${this.name} can graduate!`;
+	} else {
+	    return `Grade some more assignments`;
+	}
     }
 }
 
@@ -240,6 +253,8 @@ class ProjectManager extends Instructor {
     }    
 }
 
+
+
 /*
   STRETCH PROBLEM (no tests!)
     - Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
@@ -248,6 +263,16 @@ class ProjectManager extends Instructor {
       + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
       + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
 */
+const tim = new ProjectManager({
+    gradClassName: 'Some name',
+    favInstructor: 'Yes',
+})
+
+for (let i = 0; i < 100; i++) {
+    tim.grade(someStudent, 'Redux');
+}
+console.log(someStudent.grade);
+console.log(someStudent.graduate());
 
 ///////// END OF CHALLENGE /////////
 ///////// END OF CHALLENGE /////////
